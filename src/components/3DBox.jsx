@@ -36,12 +36,13 @@ export default function Box(props) {
     return (
         <div ref={ref} className='relative'>
             {/* <p className='text-3xl text-white font-bold'>{String(quad)}</p> */}
-            <svg width={props.size} height={props.size} className='overflow-visible absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2'>
+            <svg width={props.size} height={props.size} className='overflow-visible absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2' fill='black'>
                 <path 
                     // d={`M0 0 L75 0 75 75 0 75 0 0`}
                     // using [a] variable centers the path on the svg according to the size
                     d={`M${a} ${a} L${a * 3} ${a} ${a * 3} ${a * 3} ${a} ${a * 3} ${a} ${a}`} 
                     strokeLinecap='round'
+                    strokeLinejoin='round'
                     strokeWidth={props.width}
                     stroke="red"
                 />
