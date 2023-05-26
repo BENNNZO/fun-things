@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 
+import PlaceHolder from '@/assets/things/place-holder.png'
 import DistantSquaresImg from '@/assets/things/distant-squares.png'
 import MouseTrailImg from '@/assets/things/mouse-trail.png'
 import Rings from '@/assets/things/3d-rings.png'
@@ -30,9 +31,9 @@ export default function Home() {
             alt: "alternate"
         },
         {
-            title: "3D Rings",
-            link: '/things/3d-pointer',
-            src: Rings,
+            title: "3D Box",
+            link: '/things/3d-box',
+            src: PlaceHolder,
             alt: "alternate"
         }
     ]
