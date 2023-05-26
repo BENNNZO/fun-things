@@ -10,6 +10,8 @@ export default function page() {
     const [length, setLength] = useState(75)
     const [size, setSize] = useState(0)
     const [mousePosArr, setMousePosArr] = useState([])
+    const [svgDimentions, setSvgDimentions] = useState({ x: 0, y: 0 })
+    const [filter, setFilter] = useState(100)
 
     useEffect(() => {
         setMousePosArr(oldArr => {
@@ -28,6 +30,10 @@ export default function page() {
         // return () => updateMousePosArr()
         return () => clearInterval(mousePosArrInterval)
     }, [mouseX, mouseY])
+
+    useEffect(() => {
+        setSvgDimentions({ x: window.innerWidth, y: window.innerHeight })
+    }, [])
 
     return (
         <div className='bg-black'>
@@ -51,10 +57,18 @@ export default function page() {
                         max: 10,
                         value: size,
                         onChange: setSize
+                    },
+                    {
+                        type: "range",
+                        title: "Filter Amount:",
+                        min: 0,
+                        max: 100,
+                        value: filter,
+                        onChange: setFilter
                     }
                 ]}
             />
-            <div 
+            {/* <div 
                 className='w-screen h-screen bg-sky-900 bg-siz overflow-hidden'
                 onMouseMove={e => {setMouseX(e.clientX); setMouseY(e.clientY)}}
                 style={{ filter: 'blur(15px) contrast(30)' }}
@@ -69,7 +83,23 @@ export default function page() {
                         }}
                     />
                 ))}
-            </div>
+            </div> */}
+            {/* <p className='text-white'>{JSON.stringify(mousePosArr, null, 4)}</p> */}
+            <svg 
+                className='w-screen h-screen bg-sky-900 bg-siz overflow-hidden'
+                width={svgDimentions.x} height={svgDimentions.y}
+                onMouseMove={e => {setMouseX(e.clientX); setMouseY(e.clientY)}}
+                style={{ filter: `blur(${(filter / 100) * 15}px) contrast(${(filter / 100) * 30 + 1})` }}
+            >
+                {mousePosArr.map((e, i) => (
+                    <path 
+                        d={`M${e[0]} ${e[1]}, L${mousePosArr[i - 1] !== undefined ? mousePosArr[i - 1][0] : e[0]} ${mousePosArr[i - 1] !== undefined ? mousePosArr[i - 1][1] : e[1]}`} 
+                        stroke="white"
+                        strokeWidth={Math.abs((i / length) - 1) * 30}
+                        strokeLinecap='round'
+                    />
+                ))}
+            </svg>
         </div>
     )
 }
