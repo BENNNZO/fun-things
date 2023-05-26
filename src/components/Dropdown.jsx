@@ -35,7 +35,7 @@ export default function Dropdown(props) {
                 </div>
             </motion.div>
             <motion.div className='absolute top-full left-0 w-96'>
-                {props.options.map((e, i) => (
+                {typeof props.options !== "undefined" && props.options.map((e, i) => (
                     <motion.li
                         key={i}
                         className='list-none px-3 py-1 bg-white rounded-md mt-2 shadow-md w-full grid grid-cols-2 h-8 items-between justify-center'
@@ -57,7 +57,7 @@ export default function Dropdown(props) {
                     className='list-none px-3 py-1 pointer-events-auto bg-slate-600 cursor-pointer text-white rounded-md mt-2 shadow-md w-24 text-center h-8 items-between justify-center'
                     initial={{ opacity: 0, x: -10 }}
                     animate={dropdown ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
-                    transition={{ delay: props.options.length * 0.1 }}
+                    transition={{ delay: typeof props.options !== "undefined" ? props.options.length * 0.1 : 0.1 }}
                     onClick={() => push('/')}
                 >
                     Go Back

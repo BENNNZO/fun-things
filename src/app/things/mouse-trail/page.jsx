@@ -7,8 +7,8 @@ import Dropdown from '@/components/Dropdown';
 export default function page() {
     const [mouseX, setMouseX] = useState(0)
     const [mouseY, setMouseY] = useState(0)
-    const [length, setLength] = useState(75)
-    const [size, setSize] = useState(0)
+    const [length, setLength] = useState(125)
+    const [size, setSize] = useState(10)
     const [mousePosArr, setMousePosArr] = useState([])
     const [svgDimentions, setSvgDimentions] = useState({ x: 0, y: 0 })
     const [filter, setFilter] = useState(100)
@@ -71,7 +71,7 @@ export default function page() {
             {/* <div 
                 className='w-screen h-screen bg-sky-900 bg-siz overflow-hidden'
                 onMouseMove={e => {setMouseX(e.clientX); setMouseY(e.clientY)}}
-                style={{ filter: 'blur(15px) contrast(30)' }}
+                style={{ filter: `blur(${(filter / 100) * 15}px) contrast(${(filter / 100) * 30 + 1})` }}
             >
                 {[...Array(parseInt(length))].map((e, i) => (
                     <span
@@ -95,8 +95,9 @@ export default function page() {
                     <path 
                         d={`M${e[0]} ${e[1]}, L${mousePosArr[i - 1] !== undefined ? mousePosArr[i - 1][0] : e[0]} ${mousePosArr[i - 1] !== undefined ? mousePosArr[i - 1][1] : e[1]}`} 
                         stroke="white"
-                        strokeWidth={Math.abs((i / length) - 1) * 30}
+                        strokeWidth={Math.abs((i / length) * (size / 10) - 1) * 30}
                         strokeLinecap='round'
+                        className='pointer-events-none'
                     />
                 ))}
             </svg>
