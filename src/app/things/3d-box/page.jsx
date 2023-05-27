@@ -13,6 +13,7 @@ export default function page() {
     const [width, setWidth] = useState(2)
     const [mouseX, setMouseX] = useState(0)
     const [mouseY, setMouseY] = useState(0)
+    const [debug, setDebug] = useState(false)
 
     useEffect(() => {
         let boxMatrix = []
@@ -83,6 +84,12 @@ export default function page() {
                         max: 10,
                         value: width,
                         onChange: setWidth
+                    },
+                    {
+                        type: "checkbox",
+                        title: "debug:",
+                        value: debug,
+                        onChange: setDebug
                     }
                 ]}
             />
