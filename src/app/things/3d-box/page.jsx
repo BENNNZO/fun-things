@@ -51,7 +51,7 @@ export default function page() {
                                 debug={debug}
                                 size={size}
                                 dim={{ mid: [mouseX, mouseY]}}
-                                p={perspective}
+                                perspective={perspective / 100}
                                 width={width}
                             />
                         ))}
@@ -80,7 +80,7 @@ export default function page() {
                         type: "range",
                         title: "Perspective Of Boxes:",
                         min: 100,
-                        max: 250,
+                        max: 500,
                         value: perspective,
                         onChange: setPerspective
                     },

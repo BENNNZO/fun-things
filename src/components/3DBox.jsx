@@ -23,8 +23,10 @@ export default function Box(props) {
     useEffect(() => {
         setA(props.size / 4)
         setDist(getHypot(props.dim.mid[0] - (ref.current.offsetLeft + (ref.current.clientWidth / 2)), props.dim.mid[1] - (ref.current.offsetTop + (ref.current.clientHeight / 2))))
-        setDistX((props.dim.mid[0] - (ref.current.offsetLeft + (ref.current.clientWidth / 2))) / props.dim.mid[0]) // get X dist relative to cursor
-        setDistY((props.dim.mid[1] - (ref.current.offsetTop + (ref.current.clientHeight / 2))) / props.dim.mid[1]) // get Y dist relative to cursor
+        // setDistX((props.dim.mid[0] - (ref.current.offsetLeft + (ref.current.clientWidth / 2))) / props.dim.mid[0]) // get X dist relative to cursor
+        // setDistX((props.dim.mid[0])) // get X dist relative to cursor
+        setDistX(((props.dim.mid[0] - (ref.current.offsetLeft + (ref.current.clientWidth / 2))) / (Math.abs(props.dim.mid[0] - (screenDim.width / 2)) + screenDim.width)) * props.perspective) // get X dist relative to cursor
+        setDistY(((props.dim.mid[1] - (ref.current.offsetTop + (ref.current.clientHeight / 2))) / (Math.abs(props.dim.mid[1] - (screenDim.height / 2)) + screenDim.height)) * props.perspective) // get Y dist relative to cursor
         if (ref.current.offsetTop < props.dim.mid[1] && ref.current.offsetLeft < props.dim.mid[0]) { //  this tells you what quad the cube is in
             setQuad(1)
         } else if (ref.current.offsetTop < props.dim.mid[1] && ref.current.offsetLeft > props.dim.mid[0]) {
@@ -52,6 +54,7 @@ export default function Box(props) {
     return (
         <>
             <div ref={ref} className='relative'>
+                {/* <p className='text-3xl text-white font-bold absolute top-0 left-0 z-10'>{`[${Math.round(distX * 100) / 100}, ${Math.round(distY * 100) / 100}]`}</p> */}
                 <svg width={props.size} height={props.size} className='overflow-visible absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2' fill="transparent">
                     <span
                         // this span isnt for anything but this comment
@@ -87,7 +90,7 @@ export default function Box(props) {
                             debugLoadQuads === true && quad === 1 ? "red" :
                             debugLoadQuads === true && quad === 2 ? "yellow" : 
                             debugLoadQuads === true && quad === 3 ? "blue" : 
-                            debugLoadQuads === true && quad === 4 ? "green" : "black"
+                            debugLoadQuads === true && quad === 4 ? "green" : "white"
                         }`}
                         strokeWidth={props.width}
                         // strokeWidth={5}
@@ -101,9 +104,9 @@ export default function Box(props) {
                                 <path
                                     fill={left}
                                     d={`
-                                        M${a} ${a * 3}       
-                                        L${Math.abs((distX * a) - a)} ${(a * 3) - (distY * a)} 
-                                         ${Math.abs((distX * a) - a)} ${(a) - (distY * a)}
+                                        M${a} ${a * 3}
+                                        L${distX * -a + a} ${distY * -a + (a * 3)}
+                                         ${distX * -a + a} ${distY * -a + a}
                                          ${a} ${a}
                                     `}
                                 />
@@ -111,10 +114,9 @@ export default function Box(props) {
                                     fill={top}
                                     d={`
                                         M${a} ${a}
-                                        L${Math.abs((distX * a) - a)} ${(a) - (distY * a)}
-                                        ${(a * 3) - (distX * a)} 
-                                        ${Math.abs((distY * a) - a)}
-                                        ${a * 3} ${a}  
+                                        L${distX * -a + a} ${distY * -a + a}
+                                         ${distX * -a + (3 * a)} ${distY * -a + a}
+                                         ${3 * a} ${a}
                                     `}
                                 />
                             </>
@@ -124,19 +126,17 @@ export default function Box(props) {
                                     fill={right} 
                                     d={`
                                         M${a * 3} ${a * 3}   
-                                        L${(a * 3) - (distX * a)} 
-                                        ${(a * 3) - (distY * a)}
-                                        ${(a * 3) - (distX * a)} ${Math.abs((distY * a) - a)}
-                                        ${a * 3} ${a}
+                                        L${distX * -a + (a * 3)} ${distY * -a + (a * 3)}
+                                         ${distX * -a + (a * 3)} ${distY * -a + a}
+                                         ${a * 3} ${a}
                                     `}
                                 />
                                 <path
                                     fill={top} 
                                     d={`
                                         M${a} ${a}           
-                                        L${Math.abs((distX * a) - a)} 
-                                        ${(a) - (distY * a)}
-                                        ${(a * 3) - (distX * a)} ${Math.abs((distY * a) - a)}
+                                        L${distX * -a + a} ${distY * -a + a}
+                                        ${distX * -a + (a * 3)} ${distY * -a + a}
                                         ${a * 3} ${a}
                                     `}
                                 />
@@ -164,7 +164,7 @@ export default function Box(props) {
                             </>
                         ) : (
                             <>
-                                <path
+                                {/* <path
                                     fill={left}
                                     d={`
                                         M${a} ${a}           
@@ -172,8 +172,26 @@ export default function Box(props) {
                                          ${Math.abs((distX * a) - a)} ${(a * 3) - (distY * a)}
                                          ${a} ${a * 3}
                                     `}
+                                /> */}
+                                <path
+                                    fill={left}
+                                    d={`
+                                        M${a} ${a}           
+                                        L${distX * -a + a} ${distY * -a + a}
+                                         ${distX * -a + a} ${distY * -a + (3 * a)}
+                                         ${a} ${a * 3}
+                                    `}
                                 />
                                 <path
+                                    fill={bottom}
+                                    d={`
+                                        M${a * 3} ${a * 3}   
+                                        L${distX * -a + (3 * a)} ${distY * -a + (3 * a)}
+                                         ${distX * -a + a} ${distY * -a + (3 * a)}
+                                         ${a} ${a * 3}
+                                    `} 
+                                />
+                                {/* <path
                                     fill={bottom}
                                     d={`
                                         M${a * 3} ${a * 3}   
@@ -181,7 +199,7 @@ export default function Box(props) {
                                          ${Math.abs((distX * a) - a)} ${(a * 3) - (distY * a)}
                                          ${a} ${a * 3}
                                     `} 
-                                />
+                                /> */}
                             </>
                         )}
                     </g>
@@ -189,7 +207,6 @@ export default function Box(props) {
             </div>        
             {debugLoad && dist < 500 ? (
                 <>
-                    <p className='text-3xl text-white font-bold absolute top-0 left-0 z-10'>{`[${Math.round(distX * 100) / 100}, ${Math.round(distY * 100) / 100}]`}</p>
                     <svg width={screenDim.width} height={screenDim.height} className="absolute top-0 left-0 opacity-10" >
                         <path
                             d={`M${ref.current.offsetLeft} ${ref.current.offsetTop} L${props.dim.mid[0]} ${props.dim.mid[1]}`}
