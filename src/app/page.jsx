@@ -7,6 +7,7 @@ import PlaceHolder from '@/assets/things/place-holder.png'
 import DistantSquaresImg from '@/assets/things/distant-squares.png'
 import MouseTrailImg from '@/assets/things/mouse-trail.png'
 import Rings from '@/assets/things/3d-rings.png'
+import Boxes from '@/assets/things/3d-boxes.png'
 
 export default function Home() {
     const router = useRouter()
@@ -31,9 +32,9 @@ export default function Home() {
             alt: "alternate"
         },
         {
-            title: "3D Box",
+            title: "3D Boxes",
             link: '/things/3d-box',
-            src: PlaceHolder,
+            src: Boxes,
             alt: "alternate"
         }
     ]

@@ -13,24 +13,34 @@ export default function Box(props) {
     const [screenDim, setScreenDim] = useState({ width: 0, height: 0 })
     const [debugLoad, setDebugLoad] = useState(false)
     const [debugLoadQuads, setDebugLoadQuads] = useState(false)
+    const [top, setTop] = useState("hsl(50, 50%, 50%)")
+    const [left, setLeft] = useState("hsl(50, 50%, 50%)")
+    const [right, setRight] = useState("hsl(50, 50%, 50%)")
+    const [bottom, setBottom] = useState("hsl(50, 50%, 50%)")
+    const [front, setFront] = useState("hsl(50, 50%, 50%)")
 
     const ref = useRef()
 
-    let top = "rgb(220, 220, 220)",
-        left = "rgb(180, 180, 180)",
-        right = "rgb(150, 150, 150)",
-        bottom = "rgb(100, 100, 100)",
-        front = "rgb(125, 125, 125)"
+    // let top = "rgb(220, 220, 220)",
+    //     left = "rgb(180, 180, 180)",
+    //     right = "rgb(150, 150, 150)",
+    //     bottom = "rgb(100, 100, 100)",
+    //     front = "rgb(125, 125, 125)"
 
     useEffect(() => {
+        let distFrom0 = getHypot(ref.current.offsetTop, ref.current.offsetLeft)
+        let mainHypot = getHypot(window.innerWidth, window.innerHeight)
         setA(props.size / 4)
         setXCalc(distX * -(props.size / 4) * props.p)
         setYCalc(distY * -(props.size / 4) * props.p)
         setDist(getHypot(props.dim.mid[0] - (ref.current.offsetLeft + (ref.current.clientWidth / 2)), props.dim.mid[1] - (ref.current.offsetTop + (ref.current.clientHeight / 2))))
-        // setDistX((props.dim.mid[0] - (ref.current.offsetLeft + (ref.current.clientWidth / 2))) / props.dim.mid[0]) // get X dist relative to cursor
-        // setDistX((props.dim.mid[0])) // get X dist relative to cursor
         setDistX(((props.dim.mid[0] - (ref.current.offsetLeft + (ref.current.clientWidth / 2))) / (Math.abs(props.dim.mid[0] - (screenDim.width / 2)) + screenDim.width)) * props.length) // get X dist relative to cursor
         setDistY(((props.dim.mid[1] - (ref.current.offsetTop + (ref.current.clientHeight / 2))) / (Math.abs(props.dim.mid[1] - (screenDim.height / 2)) + screenDim.height)) * props.length) // get Y dist relative to cursor
+        setTop(`hsl(${(distFrom0 / mainHypot) * 360} 50% 75%)`)
+        setLeft(`hsl(${(distFrom0 / mainHypot) * 360} 50% 70%)`)
+        setRight(`hsl(${(distFrom0 / mainHypot) * 360} 50% 60%)`)
+        setBottom(`hsl(${(distFrom0 / mainHypot) * 360} 50% 50%)`)
+        setFront(`hsl(${(distFrom0 / mainHypot) * 360} 50% 60%)`)
         if (ref.current.offsetTop < props.dim.mid[1] && ref.current.offsetLeft < props.dim.mid[0]) { //  this tells you what quad the cube is in
             setQuad(1)
         } else if (ref.current.offsetTop < props.dim.mid[1] && ref.current.offsetLeft > props.dim.mid[0]) {
@@ -60,7 +70,7 @@ export default function Box(props) {
 
     return (
         <>
-            <div ref={ref} className='relative'>
+            <div ref={ref} className='relative drop-shadow-md'>
                 {/* <p className='text-3xl text-white font-bold absolute top-0 left-0 z-10'>{`[${Math.round(distX * 100) / 100}, ${Math.round(distY * 100) / 100}]`}</p> */}
                 <svg 
                     width={props.size} 
@@ -68,7 +78,7 @@ export default function Box(props) {
                     className='overflow-visible absolute -translate-x-1/2 -translate-y-1/2' 
                     // className='overflow-visible absolute -translate-x-1/2 -translate-y-1/2 top-0 left-0' 
                     style={{ left: `${distX * (props.size / 4)}px`, top: `${distY * (props.size / 4)}px` }}
-                    fill="transparent"
+                    // fill="transparent"
                 >
                     <span
                         // this span isnt for anything but this comment
@@ -99,23 +109,17 @@ export default function Box(props) {
                         //         |
                         // 
                     />
-                    <g 
-                        stroke={`${
-                            debugLoadQuads === true && quad === 1 ? "red" :
-                            debugLoadQuads === true && quad === 2 ? "yellow" : 
-                            debugLoadQuads === true && quad === 3 ? "blue" : 
-                            debugLoadQuads === true && quad === 4 ? "green" : "white"
-                        }`}
-                        strokeWidth={props.width}
-                        // strokeWidth={5}
+                    <g
+                        strokeWidth={1}
                         strokeLinecap="round"
                         strokeLinejoin='round'
-                        fill='gray'
                     >
+                        <path fill={front} stroke={front} d={`M${a} ${a} L${a * 3} ${a} ${a * 3} ${a * 3} ${a} ${a * 3} ${a} ${a}`} />
                         {quad === 1 ? (
                             <>
                                 <path
                                     fill={left}
+                                    stroke={left}
                                     d={`
                                         M${a} ${a * 3}
                                         L${xCalc + a} ${yCalc + (a * 3)}
@@ -125,6 +129,7 @@ export default function Box(props) {
                                 />
                                 <path
                                     fill={top}
+                                    stroke={top}
                                     d={`
                                         M${a} ${a}
                                         L${xCalc + a} ${yCalc + a}
@@ -136,7 +141,8 @@ export default function Box(props) {
                         ) : quad === 2 ? (
                             <>
                                 <path
-                                    fill={right} 
+                                    fill={right}
+                                    stroke={right}
                                     d={`
                                         M${a * 3} ${a * 3}   
                                         L${xCalc + (a * 3)} ${yCalc + (a * 3)}
@@ -146,6 +152,7 @@ export default function Box(props) {
                                 />
                                 <path
                                     fill={top} 
+                                    stroke={top}
                                     d={`
                                         M${a} ${a}           
                                         L${xCalc + a} ${yCalc + a}
@@ -158,6 +165,7 @@ export default function Box(props) {
                             <>
                                 <path
                                     fill={bottom}
+                                    stroke={bottom}
                                     d={`
                                         M${a} ${a * 3}       
                                         L${xCalc + a} ${yCalc + (3 * a)}
@@ -167,6 +175,7 @@ export default function Box(props) {
                                 />
                                 <path
                                     fill={right}
+                                    stroke={right}
                                     d={`
                                         M${a * 3} ${a}       
                                         L${xCalc + (3 * a)} ${yCalc + a}
@@ -179,6 +188,7 @@ export default function Box(props) {
                             <>
                                 <path
                                     fill={left}
+                                    stroke={left}
                                     d={`
                                         M${a} ${a}           
                                         L${xCalc + a} ${yCalc + a}
@@ -188,6 +198,7 @@ export default function Box(props) {
                                 />
                                 <path
                                     fill={bottom}
+                                    stroke={bottom}
                                     d={`
                                         M${a * 3} ${a * 3}   
                                         L${xCalc + (3 * a)} ${yCalc + (3 * a)}
@@ -197,41 +208,9 @@ export default function Box(props) {
                                 />
                             </>
                         )}
-                        <path fill={front} d={`M${a} ${a} L${a * 3} ${a} ${a * 3} ${a * 3} ${a} ${a * 3} ${a} ${a}`} />
                     </g>
                 </svg>
-            </div>        
-            {debugLoad === true && dist < 500 ? (
-                <>
-                    <svg width={screenDim.width} height={screenDim.height} className="absolute top-0 left-0 opacity-10" >
-                        <path
-                            d={`M${ref.current.offsetLeft - (ref.current.offsetLeft / 2)} ${ref.current.offsetTop - (ref.current.offsetTop / 2)} L${props.dim.mid[0]} ${props.dim.mid[1]}`}
-                            stroke="white"
-                            strokeWidth={2}
-                        />
-                        <path
-                            d={`M${ref.current.offsetLeft} ${ref.current.offsetTop} L${ref.current.offsetLeft} ${props.dim.mid[1]}`}
-                            stroke="salmon"
-                            strokeWidth={2}
-                        />
-                        <path
-                            d={`M${ref.current.offsetLeft} ${props.dim.mid[1]} L${props.dim.mid[0]} ${props.dim.mid[1]}`}
-                            stroke="lime"
-                            strokeWidth={2}
-                        />
-                        <path
-                            d={`M0 ${props.dim.mid[1]} L${screenDim.width} ${props.dim.mid[1]}`}
-                            stroke="red"
-                            strokeWidth={2}
-                        />
-                        <path
-                            d={`M${props.dim.mid[0]} 0 L${props.dim.mid[0]} ${screenDim.height} `}
-                            stroke="green"
-                            strokeWidth={2}
-                        />
-                    </svg>
-                </>
-            ) : null}
+            </div>
         </>
     )
 }

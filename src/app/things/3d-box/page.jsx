@@ -14,11 +14,8 @@ export default function page() {
     const [amount, setAmount] = useState(250)
     const [size, setSize] = useState(150)
     const [perspective, setPerspective] = useState(150)
-    const [width, setWidth] = useState(0)
     const [mouseX, setMouseX] = useState(0)
     const [mouseY, setMouseY] = useState(0)
-    const [debug, setDebug] = useState(false)
-    const [debugQuad, setDebugQuad] = useState(false)
     const [boxLength, setBoxLength] = useState(300)
 
     useEffect(() => {
@@ -49,13 +46,10 @@ export default function page() {
                     <div className='flex flex-row justify-around w-full h-full items-center'>
                         {e.map(() => (
                             <Box
-                                debugQuad={debugQuad}
-                                debug={debug}
                                 size={size}
                                 dim={{ mid: [mouseX, mouseY]}}
                                 // dim={{ mid: [500, 500]}}
                                 length={boxLength / 100}
-                                width={width}
                                 p={perspective / 100}
                             />
                         ))}
@@ -95,26 +89,6 @@ export default function page() {
                         max: 1000,
                         value: perspective,
                         onChange: setPerspective
-                    },
-                    {
-                        type: "range",
-                        title: "Width Of Stroke:",
-                        min: 0,
-                        max: 10,
-                        value: width,
-                        onChange: setWidth
-                    },
-                    {
-                        type: "checkbox",
-                        title: "debug:",
-                        value: debug,
-                        onChange: setDebug
-                    },
-                    {
-                        type: "checkbox",
-                        title: "debug quads:",
-                        value: debugQuad,
-                        onChange: setDebugQuad
                     }
                 ]}
             />
