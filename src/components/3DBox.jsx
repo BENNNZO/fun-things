@@ -1,6 +1,5 @@
 "use client"
 
-import { sendStatusCode } from 'next/dist/server/api-utils';
 import React, { useRef, useEffect, useState } from 'react';
 
 export default function Box(props) {
@@ -11,10 +10,15 @@ export default function Box(props) {
     const [quad, setQuad] = useState(0)
     const [screenDim, setScreenDim] = useState({ width: 0, height: 0 })
     const [debugLoad, setDebugLoad] = useState(false)
+    const [debugLoadQuads, setDebugLoadQuads] = useState(false)
 
     const ref = useRef()
 
-    let color = "white"
+    let top = "rgb(75, 75, 75)",
+        left = "rgb(50, 50, 50)",
+        right = "rgb(30, 30, 30)",
+        bottom = "rgb(10, 10, 10)",
+        front = "rgb(25, 25, 25)"
 
     useEffect(() => {
         setA(props.size / 4)
@@ -30,7 +34,6 @@ export default function Box(props) {
         } else if (ref.current.offsetTop > props.dim.mid[1] && ref.current.offsetLeft < props.dim.mid[0]) {
             setQuad(4)
         }
-        console.log(ref)
     }, [props.size, props.dim])
 
     useEffect(() => {
@@ -38,7 +41,8 @@ export default function Box(props) {
     }, [])
 
     useEffect(() => {
-        if (props.debug) setDebugLoad(true)
+        if (props.debug === true) setDebugLoad(true)
+        if (props.debugQuad === true) setDebugLoadQuads(true)
     }, [props.debug])
 
     function getHypot(a, b) { // get hypotenous (I don't know how to spella)
@@ -48,8 +52,7 @@ export default function Box(props) {
     return (
         <>
             <div ref={ref} className='relative'>
-                {/* <p className='text-3xl text-white font-bold'>{String(quad)}</p> */}
-                <svg width={props.size} height={props.size} className='overflow-visible absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2' fill='black'>
+                <svg width={props.size} height={props.size} className='overflow-visible absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2' fill="transparent">
                     <span
                         // this span isnt for anything but this comment
                         // i don't think ill every be able to explain what im doing very good i mean i barely understand what im doing
@@ -81,70 +84,140 @@ export default function Box(props) {
                     />
                     <g 
                         stroke={`${
-                            debugLoad === true && quad === 1 ? "red" :
-                            debugLoad === true && quad === 2 ? "yellow" : 
-                            debugLoad === true && quad === 3 ? "blue" : 
-                            debugLoad === true && quad === 4 ? "green" : "white"
+                            debugLoadQuads === true && quad === 1 ? "red" :
+                            debugLoadQuads === true && quad === 2 ? "yellow" : 
+                            debugLoadQuads === true && quad === 3 ? "blue" : 
+                            debugLoadQuads === true && quad === 4 ? "green" : "black"
                         }`}
                         strokeWidth={props.width}
+                        // strokeWidth={5}
                         strokeLinecap="round"
                         strokeLinejoin='round'
+                        fill='gray'
                     >
+                        <path fill={front} d={`M${a} ${a} L${a * 3} ${a} ${a * 3} ${a * 3} ${a} ${a * 3} ${a} ${a}`} />
                         {quad === 1 ? (
                             <>
-                                <path d={`M${a} ${a * 3}       L${Math.abs((distX * a) - a)} ${(a * 3) - (distY * a)}`} />
-                                <path d={`M${a} ${a}           L${Math.abs((distX * a) - a)} ${(a) - (distY * a)}`} />
-                                <path d={`M${a * 3} ${a}       L${(a * 3) - (distX * a)} ${Math.abs((distY * a) - a)}`} />
-                                <path d={`M${Math.abs((distX * a) - a)} ${(a * 3) - (distY * a)}   L${Math.abs((distX * a) - a)} ${(a) - (distY * a)}`} />
-                                <path d={`M${Math.abs((distX * a) - a)} ${(a) - (distY * a)}       L${(a * 3) - (distX * a)} ${Math.abs((distY * a) - a)}`} />
+                                <path
+                                    fill={left}
+                                    d={`
+                                        M${a} ${a * 3}       
+                                        L${Math.abs((distX * a) - a)} ${(a * 3) - (distY * a)} 
+                                         ${Math.abs((distX * a) - a)} ${(a) - (distY * a)}
+                                         ${a} ${a}
+                                    `}
+                                />
+                                <path
+                                    fill={top}
+                                    d={`
+                                        M${a} ${a}
+                                        L${Math.abs((distX * a) - a)} ${(a) - (distY * a)}
+                                        ${(a * 3) - (distX * a)} 
+                                        ${Math.abs((distY * a) - a)}
+                                        ${a * 3} ${a}  
+                                    `}
+                                />
                             </>
                         ) : quad === 2 ? (
                             <>
-                                <path d={`M${a * 3} ${a * 3}   L${(a * 3) - (distX * a)} ${(a * 3) - (distY * a)}`} />
-                                <path d={`M${a} ${a}           L${Math.abs((distX * a) - a)} ${(a) - (distY * a)}`} />
-                                <path d={`M${a * 3} ${a}       L${(a * 3) - (distX * a)} ${Math.abs((distY * a) - a)}`} />
-                                <path d={`M${(a * 3) - (distX * a)} ${Math.abs((distY * a) - a)}   L${(a * 3) - (distX * a)} ${(a * 3) - (distY * a)}`} />
-                                <path d={`M${Math.abs((distX * a) - a)} ${(a) - (distY * a)}       L${(a * 3) - (distX * a)} ${Math.abs((distY * a) - a)}`} />
+                                <path
+                                    fill={right} 
+                                    d={`
+                                        M${a * 3} ${a * 3}   
+                                        L${(a * 3) - (distX * a)} 
+                                        ${(a * 3) - (distY * a)}
+                                        ${(a * 3) - (distX * a)} ${Math.abs((distY * a) - a)}
+                                        ${a * 3} ${a}
+                                    `}
+                                />
+                                <path
+                                    fill={top} 
+                                    d={`
+                                        M${a} ${a}           
+                                        L${Math.abs((distX * a) - a)} 
+                                        ${(a) - (distY * a)}
+                                        ${(a * 3) - (distX * a)} ${Math.abs((distY * a) - a)}
+                                        ${a * 3} ${a}
+                                    `}
+                                />
                             </>
                         ) : quad === 3 ? (
                             <>
-                                <path d={`M${a} ${a * 3}       L${Math.abs((distX * a) - a)} ${(a * 3) - (distY * a)}`} />
-                                <path d={`M${a * 3} ${a * 3}   L${(a * 3) - (distX * a)} ${(a * 3) - (distY * a)}`} />
-                                <path d={`M${a * 3} ${a}       L${(a * 3) - (distX * a)} ${Math.abs((distY * a) - a)}`} />
-                                <path d={`M${Math.abs((distX * a) - a)} ${(a * 3) - (distY * a)}   L${(a * 3) - (distX * a)} ${(a * 3) - (distY * a)}`} />
-                                <path d={`M${(a * 3) - (distX * a)} ${(a * 3) - (distY * a)}       L${(a * 3) - (distX * a)} ${Math.abs((distY * a) - a)}`} />
+                                <path
+                                    fill={bottom}
+                                    d={`
+                                        M${a} ${a * 3}       
+                                        L${Math.abs((distX * a) - a)} ${(a * 3) - (distY * a)}
+                                         ${(a * 3) - (distX * a)} ${(a * 3) - (distY * a)}
+                                         ${a * 3} ${a * 3}
+                                    `}
+                                />
+                                <path
+                                    fill={right}
+                                    d={`
+                                        M${a * 3} ${a}       
+                                        L${(a * 3) - (distX * a)} ${Math.abs((distY * a) - a)}
+                                         ${(a * 3) - (distX * a)} ${(a * 3) - (distY * a)}
+                                         ${a * 3} ${a * 3}
+                                    `}
+                                />
                             </>
                         ) : (
                             <>
-                                <path d={`M${a} ${a * 3}       L${Math.abs((distX * a) - a)} ${(a * 3) - (distY * a)}`} />
-                                <path d={`M${a} ${a}           L${Math.abs((distX * a) - a)} ${(a) - (distY * a)}`} />
-                                <path d={`M${a * 3} ${a * 3}   L${(a * 3) - (distX * a)} ${(a * 3) - (distY * a)}`} />
-                                <path d={`M${Math.abs((distX * a) - a)} ${(a * 3) - (distY * a)}   L${Math.abs((distX * a) - a)} ${(a) - (distY * a)}`} />
-                                <path d={`M${Math.abs((distX * a) - a)} ${(a * 3) - (distY * a)}   L${(a * 3) - (distX * a)} ${(a * 3) - (distY * a)}`} />
+                                <path
+                                    fill={left}
+                                    d={`
+                                        M${a} ${a}           
+                                        L${Math.abs((distX * a) - a)} ${(a) - (distY * a)}
+                                         ${Math.abs((distX * a) - a)} ${(a * 3) - (distY * a)}
+                                         ${a} ${a * 3}
+                                    `}
+                                />
+                                <path
+                                    fill={bottom}
+                                    d={`
+                                        M${a * 3} ${a * 3}   
+                                        L${(a * 3) - (distX * a)} ${(a * 3) - (distY * a)}
+                                         ${Math.abs((distX * a) - a)} ${(a * 3) - (distY * a)}
+                                         ${a} ${a * 3}
+                                    `} 
+                                />
                             </>
                         )}
-                        <path d={`M${a} ${a} L${a * 3} ${a} ${a * 3} ${a * 3} ${a} ${a * 3} ${a} ${a}`} />
                     </g>
                 </svg>
             </div>        
             {debugLoad && dist < 500 ? (
-                <svg width={screenDim.width} height={screenDim.height} className="absolute top-0 left-0 opacity-10" >
-                    <path
-                        d={`M${ref.current.offsetLeft} ${ref.current.offsetTop} L${props.dim.mid[0]} ${props.dim.mid[1]}`}
-                        stroke="white"
-                        strokeWidth={2}
-                    />
-                    <path
-                        d={`M${ref.current.offsetLeft} ${ref.current.offsetTop} L${ref.current.offsetLeft} ${props.dim.mid[1]}`}
-                        stroke="salmon"
-                        strokeWidth={2}
-                    />
-                    <path
-                        d={`M${ref.current.offsetLeft} ${props.dim.mid[1]} L${props.dim.mid[0]} ${props.dim.mid[1]}`}
-                        stroke="lime"
-                        strokeWidth={2}
-                    />
-                </svg>
+                <>
+                    <p className='text-3xl text-white font-bold absolute top-0 left-0 z-10'>{`[${Math.round(distX * 100) / 100}, ${Math.round(distY * 100) / 100}]`}</p>
+                    <svg width={screenDim.width} height={screenDim.height} className="absolute top-0 left-0 opacity-10" >
+                        <path
+                            d={`M${ref.current.offsetLeft} ${ref.current.offsetTop} L${props.dim.mid[0]} ${props.dim.mid[1]}`}
+                            stroke="white"
+                            strokeWidth={2}
+                        />
+                        <path
+                            d={`M${ref.current.offsetLeft} ${ref.current.offsetTop} L${ref.current.offsetLeft} ${props.dim.mid[1]}`}
+                            stroke="salmon"
+                            strokeWidth={2}
+                        />
+                        <path
+                            d={`M${ref.current.offsetLeft} ${props.dim.mid[1]} L${props.dim.mid[0]} ${props.dim.mid[1]}`}
+                            stroke="lime"
+                            strokeWidth={2}
+                        />
+                        <path
+                            d={`M0 ${props.dim.mid[1]} L${screenDim.width} ${props.dim.mid[1]}`}
+                            stroke="red"
+                            strokeWidth={2}
+                        />
+                        <path
+                            d={`M${props.dim.mid[0]} 0 L${props.dim.mid[0]} ${screenDim.height} `}
+                            stroke="green"
+                            strokeWidth={2}
+                        />
+                    </svg>
+                </>
             ) : null}
         </>
     )
