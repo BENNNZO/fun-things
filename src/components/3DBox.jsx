@@ -38,7 +38,7 @@ export default function Box(props) {
         setDistY(((props.dim.mid[1] - (ref.current.offsetTop + (ref.current.clientHeight / 2))) / (Math.abs(props.dim.mid[1] - (screenDim.height / 2)) + screenDim.height)) * props.length) // get Y dist relative to cursor
         setTop(`hsl(${(distFrom0 / mainHypot) * 360} 50% 75%)`)
         setLeft(`hsl(${(distFrom0 / mainHypot) * 360} 50% 70%)`)
-        setRight(`hsl(${(distFrom0 / mainHypot) * 360} 50% 60%)`)
+        setRight(`hsl(${(distFrom0 / mainHypot) * 360} 50% 55%)`)
         setBottom(`hsl(${(distFrom0 / mainHypot) * 360} 50% 50%)`)
         setFront(`hsl(${(distFrom0 / mainHypot) * 360} 50% 60%)`)
         if (ref.current.offsetTop < props.dim.mid[1] && ref.current.offsetLeft < props.dim.mid[0]) { //  this tells you what quad the cube is in
@@ -69,148 +69,141 @@ export default function Box(props) {
     }
 
     return (
-        <>
-            <div ref={ref} className='relative drop-shadow-md'>
-                {/* <p className='text-3xl text-white font-bold absolute top-0 left-0 z-10'>{`[${Math.round(distX * 100) / 100}, ${Math.round(distY * 100) / 100}]`}</p> */}
-                <svg 
-                    width={props.size} 
-                    height={props.size} 
-                    className='overflow-visible absolute -translate-x-1/2 -translate-y-1/2' 
-                    // className='overflow-visible absolute -translate-x-1/2 -translate-y-1/2 top-0 left-0' 
-                    style={{ left: `${distX * (props.size / 4)}px`, top: `${distY * (props.size / 4)}px` }}
-                    // fill="transparent"
+        <div ref={ref} className='relative drop-shadow-md'>
+            <svg 
+                width={props.size} 
+                height={props.size} 
+                className='overflow-visible absolute -translate-x-1/2 -translate-y-1/2' 
+                style={{ left: `${distX * (props.size / 4)}px`, top: `${distY * (props.size / 4)}px` }}
+            >
+                <span
+                    // this span isnt for anything but this comment
+                    // i don't think ill every be able to explain what im doing very good i mean i barely understand what im doing
+
+                    // a = | or __ of 1/4 of the width and height of the svg container
+                    // | a,a     a*3,a
+                    // |
+                    // | a,a*3   a*3,a*3
+                    // |__ __ __ __
+
+                    // (a, a) ---> (a * 3, a)
+                    //     ^           |
+                    //     |           |
+                    //     |           |
+                    //     |           V
+                    // (a, a*3) <- (a*3, a*3)
+
+                    //   [ QUADRANTS ]
+                    // 
+                    //         |
+                    //     1   |   2
+                    // ________|________
+                    //         |
+                    //     4   |   3
+                    //         |
+                    // 
+                />
+                <g
+                    strokeWidth={1}
+                    strokeLinecap="round"
+                    strokeLinejoin='round'
                 >
-                    <span
-                        // this span isnt for anything but this comment
-                        // i don't think ill every be able to explain what im doing very good i mean i barely understand what im doing
-                        // d={`M0 0 L75 0 75 75 0 75 0 0`}
-                        // using [a] variable centers the path on the svg according to the size
-
-                        // a = | or __
-                        // |
-                        // |
-                        // |
-                        // |__ __ __ __
-
-                        // (a, a) ---> (a * 3, a)
-                        //     ^           |
-                        //     |           |
-                        //     |           |
-                        //     |           V
-                        // (a, a*3) <- (a*3, a*3)
-
-                        //   [ QUADRANTS ]
-                        // 
-                        //         |
-                        //     1   |   2
-                        // ________|________
-                        //         |
-                        //     4   |   3
-                        //         |
-                        // 
-                    />
-                    <g
-                        strokeWidth={1}
-                        strokeLinecap="round"
-                        strokeLinejoin='round'
-                    >
-                        <path fill={front} stroke={front} d={`M${a} ${a} L${a * 3} ${a} ${a * 3} ${a * 3} ${a} ${a * 3} ${a} ${a}`} />
-                        {quad === 1 ? (
-                            <>
-                                <path
-                                    fill={left}
-                                    stroke={left}
-                                    d={`
-                                        M${a} ${a * 3}
-                                        L${xCalc + a} ${yCalc + (a * 3)}
-                                         ${xCalc + a} ${yCalc + a}
-                                         ${a} ${a}
-                                    `}
-                                />
-                                <path
-                                    fill={top}
-                                    stroke={top}
-                                    d={`
-                                        M${a} ${a}
-                                        L${xCalc + a} ${yCalc + a}
-                                         ${xCalc + (3 * a)} ${yCalc + a}
-                                         ${3 * a} ${a}
-                                    `}
-                                />
-                            </>
-                        ) : quad === 2 ? (
-                            <>
-                                <path
-                                    fill={right}
-                                    stroke={right}
-                                    d={`
-                                        M${a * 3} ${a * 3}   
-                                        L${xCalc + (a * 3)} ${yCalc + (a * 3)}
-                                         ${xCalc + (a * 3)} ${yCalc + a}
-                                         ${a * 3} ${a}
-                                    `}
-                                />
-                                <path
-                                    fill={top} 
-                                    stroke={top}
-                                    d={`
-                                        M${a} ${a}           
-                                        L${xCalc + a} ${yCalc + a}
+                    <path fill={front} stroke={front} d={`M${a} ${a} L${a * 3} ${a} ${a * 3} ${a * 3} ${a} ${a * 3} ${a} ${a}`} />
+                    {quad === 1 ? (
+                        <>
+                            <path
+                                fill={left}
+                                stroke={left}
+                                d={`
+                                    M${a} ${a * 3}
+                                    L${xCalc + a} ${yCalc + (a * 3)}
+                                        ${xCalc + a} ${yCalc + a}
+                                        ${a} ${a}
+                                `}
+                            />
+                            <path
+                                fill={top}
+                                stroke={top}
+                                d={`
+                                    M${a} ${a}
+                                    L${xCalc + a} ${yCalc + a}
+                                        ${xCalc + (3 * a)} ${yCalc + a}
+                                        ${3 * a} ${a}
+                                `}
+                            />
+                        </>
+                    ) : quad === 2 ? (
+                        <>
+                            <path
+                                fill={right}
+                                stroke={right}
+                                d={`
+                                    M${a * 3} ${a * 3}   
+                                    L${xCalc + (a * 3)} ${yCalc + (a * 3)}
                                         ${xCalc + (a * 3)} ${yCalc + a}
                                         ${a * 3} ${a}
-                                    `}
-                                />
-                            </>
-                        ) : quad === 3 ? (
-                            <>
-                                <path
-                                    fill={bottom}
-                                    stroke={bottom}
-                                    d={`
-                                        M${a} ${a * 3}       
-                                        L${xCalc + a} ${yCalc + (3 * a)}
-                                         ${xCalc + (3 * a)} ${yCalc + (3 * a)}
-                                         ${a * 3} ${a * 3}
-                                    `}
-                                />
-                                <path
-                                    fill={right}
-                                    stroke={right}
-                                    d={`
-                                        M${a * 3} ${a}       
-                                        L${xCalc + (3 * a)} ${yCalc + a}
-                                         ${xCalc + (3 * a)} ${yCalc + (a * 3)}
-                                         ${a * 3} ${a * 3}
-                                    `}
-                                />
-                            </>
-                        ) : (
-                            <>
-                                <path
-                                    fill={left}
-                                    stroke={left}
-                                    d={`
-                                        M${a} ${a}           
-                                        L${xCalc + a} ${yCalc + a}
-                                         ${xCalc + a} ${yCalc + (3 * a)}
-                                         ${a} ${a * 3}
-                                    `}
-                                />
-                                <path
-                                    fill={bottom}
-                                    stroke={bottom}
-                                    d={`
-                                        M${a * 3} ${a * 3}   
-                                        L${xCalc + (3 * a)} ${yCalc + (3 * a)}
-                                         ${xCalc + a} ${yCalc + (3 * a)}
-                                         ${a} ${a * 3}
-                                    `} 
-                                />
-                            </>
-                        )}
-                    </g>
-                </svg>
-            </div>
-        </>
+                                `}
+                            />
+                            <path
+                                fill={top} 
+                                stroke={top}
+                                d={`
+                                    M${a} ${a}           
+                                    L${xCalc + a} ${yCalc + a}
+                                    ${xCalc + (a * 3)} ${yCalc + a}
+                                    ${a * 3} ${a}
+                                `}
+                            />
+                        </>
+                    ) : quad === 3 ? (
+                        <>
+                            <path
+                                fill={bottom}
+                                stroke={bottom}
+                                d={`
+                                    M${a} ${a * 3}       
+                                    L${xCalc + a} ${yCalc + (3 * a)}
+                                        ${xCalc + (3 * a)} ${yCalc + (3 * a)}
+                                        ${a * 3} ${a * 3}
+                                `}
+                            />
+                            <path
+                                fill={right}
+                                stroke={right}
+                                d={`
+                                    M${a * 3} ${a}       
+                                    L${xCalc + (3 * a)} ${yCalc + a}
+                                        ${xCalc + (3 * a)} ${yCalc + (a * 3)}
+                                        ${a * 3} ${a * 3}
+                                `}
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <path
+                                fill={left}
+                                stroke={left}
+                                d={`
+                                    M${a} ${a}           
+                                    L${xCalc + a} ${yCalc + a}
+                                        ${xCalc + a} ${yCalc + (3 * a)}
+                                        ${a} ${a * 3}
+                                `}
+                            />
+                            <path
+                                fill={bottom}
+                                stroke={bottom}
+                                d={`
+                                    M${a * 3} ${a * 3}   
+                                    L${xCalc + (3 * a)} ${yCalc + (3 * a)}
+                                        ${xCalc + a} ${yCalc + (3 * a)}
+                                        ${a} ${a * 3}
+                                `} 
+                            />
+                        </>
+                    )}
+                </g>
+            </svg>
+        </div>
     )
 }

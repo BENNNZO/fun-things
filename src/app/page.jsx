@@ -36,6 +36,12 @@ export default function Home() {
             link: '/things/3d-box',
             src: Boxes,
             alt: "alternate"
+        },
+        {
+            title: "Fly Swarm",
+            link: '/things/pointer-swarm',
+            src: PlaceHolder,
+            alt: "alternate"
         }
     ]
 
