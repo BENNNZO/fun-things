@@ -36,7 +36,7 @@ export default function page() {
     }, [])
 
     return (
-        <div className='bg-blue-950'>
+        <div className='bg-black'>
             <Dropdown
                 trackMouse
                 setMouseX={setMouseX}
