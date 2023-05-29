@@ -43,6 +43,12 @@ export default function Home() {
             link: '/things/pointer-swarm',
             src: AmberFlies,
             alt: "alternate"
+        },
+        {
+            title: "Spiral",
+            link: '/things/spiral',
+            src: PlaceHolder,
+            alt: "alternate"
         }
     ]
 
