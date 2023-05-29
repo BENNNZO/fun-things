@@ -60,7 +60,8 @@ export default function(props) {
                             }px - 50%)
                     )`,
                 transitionDuration: `${duration}ms`,
-                backgroundColor: color,
+                // backgroundColor: color,
+                backgroundImage: `radial-gradient(rgba(255, 255, 255, 1) 0%, ${color} 30%, transparent)`,
                 boxShadow: `0 0 10px ${color}, 
                             ${(props.mouseOffset.x - (screenDim.width / 2)) / (screenDim.width / 2) * 10}px ${(props.mouseOffset.y - (screenDim.height / 2)) / (screenDim.height / 2) * 10}px 20px ${color},
                             ${(props.mouseOffset.x - (screenDim.width / 2)) / (screenDim.width / 2) * 20}px ${(props.mouseOffset.y - (screenDim.height / 2)) / (screenDim.height / 2) * 20}px 40px ${color}`

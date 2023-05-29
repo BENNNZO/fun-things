@@ -12,7 +12,7 @@ export default function() {
     const [mouseX, setMouseX] = useState(0)
     const [mouseY, setMouseY] = useState(0)
 
-    const [amount, setAmount] = useState(10)
+    const [amount, setAmount] = useState(50)
     const [speed, setSpeed] = useState(75)
     const [spread, setSpread] = useState(50)
 
@@ -30,7 +30,7 @@ export default function() {
     }, [frameCount])
 
     return (
-        <div className='bg-gradient-to-tr from-orange-950/20 to-rose-950/20 bg-black'>
+        <div className='bg-gradient-to-tr from-orange-950/10 to-rose-950/10 bg-black'>
             <Dropdown
                 trackMouse
                 setMouseX={setMouseX}
