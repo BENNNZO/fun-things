@@ -12,9 +12,11 @@ export default function() {
     const [mouseX, setMouseX] = useState(0)
     const [mouseY, setMouseY] = useState(0)
 
-    const [amount, setAmount] = useState(100)
+    const [amount, setAmount] = useState(10)
     const [speed, setSpeed] = useState(75)
     const [spread, setSpread] = useState(50)
+
+    const [filter, setFilter] = useState(100)
 
     useEffect(() => {
         const frame = setInterval(() => {
@@ -29,11 +31,11 @@ export default function() {
     }, [frameCount])
 
     return (
-        <div 
-            className='bg-black w-screen h-screen overflow-hidden' 
-            onMouseMove={e => {setMouseX(e.clientX); setMouseY(e.clientY)}}
-        >
-            <Dropdown 
+        <div className='bg-black'>
+            <Dropdown
+                trackMouse
+                setMouseX={setMouseX}
+                setMouseY={setMouseY}
                 options={[
                     {
                         type: "range",
@@ -55,9 +57,17 @@ export default function() {
                         type: "range",
                         title: "Relative Spread:",
                         min: 10,
-                        max: 100,
+                        max: 200,
                         value: spread,
                         onChange: setSpread
+                    },
+                    {
+                        type: "range",
+                        title: "Filter Amount:",
+                        min: 10,
+                        max: 200,
+                        value: filter,
+                        onChange: setFilter
                     }
                 ]}
             />
@@ -67,23 +77,29 @@ export default function() {
                 <p className='text-xl text-white'>{`Mouse_X: ${String(mouseX)}px`}</p>
                 <p className='text-xl text-white'>{`Mouse_Y: ${String(mouseY)}px`}</p>
             </div>
-            {/* <div
-                className='absolute pointer-events-none transition-transform ease-out duration-1000'
-                style={{ transform: `translate(${mouseX}px, ${mouseY}px)` }}
-            > */}
-                {[...Array(parseInt(amount))].map((e, i) => (
-                    <Fly
-                        key={i}
-                        update={frameCount}
-                        timeOffset={(360 / amount) * i}
-                        mouseOffset={{ x: mouseX, y: mouseY }}
-                        speed={speed / 10}
-                        relativeSpread={spread}
-                        index={i}
-                        total={amount}
-                    />
-                ))}
-            {/* </div> */}
+            <div 
+                className='bg-sky-900 w-screen h-screen overflow-hidden' 
+                onMouseMove={e => {setMouseX(e.clientX); setMouseY(e.clientY)}}
+                style={{ filter: `blur(${filter / 100 * 15}px) contrast(${filter / 100 * 30})` }}
+            >
+                {/* <div
+                    className='absolute pointer-events-none transition-transform ease-out duration-1000'
+                    style={{ transform: `translate(${mouseX}px, ${mouseY}px)` }}
+                > */}
+                    {[...Array(parseInt(amount))].map((e, i) => (
+                        <Fly
+                            key={i}
+                            update={frameCount}
+                            timeOffset={(360 / amount) * i}
+                            mouseOffset={{ x: mouseX, y: mouseY }}
+                            speed={speed / 10}
+                            relativeSpread={spread}
+                            index={i}
+                            total={amount}
+                        />
+                    ))}
+                {/* </div> */}
+            </div>
         </div>
     )
 }

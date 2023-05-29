@@ -9,7 +9,7 @@ export default function page() {
     const [mouseY, setMouseY] = useState(0)
     const [length, setLength] = useState(125)
     const [size, setSize] = useState(10)
-    const [mousePosArr, setMousePosArr] = useState([])
+    const [mousePosArr, setMousePosArr] = useState([[0, 0]])
     const [svgDimentions, setSvgDimentions] = useState({ x: 0, y: 0 })
     const [filter, setFilter] = useState(100)
 
@@ -36,7 +36,7 @@ export default function page() {
     }, [])
 
     return (
-        <div className='bg-black'>
+        <div className='bg-blue-950'>
             <Dropdown
                 trackMouse
                 setMouseX={setMouseX}
@@ -100,6 +100,23 @@ export default function page() {
                         className='pointer-events-none'
                     />
                 ))}
+                {/* <path
+                    fill='transparent'
+                    d={`
+                        M${mousePosArr[0][0]} ${mousePosArr[0][1]}, 
+                        Q${mousePosArr.map((e, i) => {
+                            if (i !== 0) {
+                                return `${e[0]} ${e[1]}`
+                            }
+                        }).join(" ")}
+                    `} 
+                    stroke="white"
+                    strokeWidth={30}
+                    // strokeWidth={Math.abs((i / length) * (size / 10) - 1) * 30}
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    className='pointer-events-none'
+                /> */}
             </svg>
         </div>
     )
