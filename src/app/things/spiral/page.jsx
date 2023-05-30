@@ -5,7 +5,7 @@ import Dropdown from '@/components/Dropdown';
 
 export default function page() {
     const [amount, setAmount] = useState(100);
-    const [offset, setOffset] = useState(0);
+    const [offset, setOffset] = useState(10000);
     const [speed, setSpeed] = useState(100);
     const [dots, setDots] = useState(false);
     const [screenDim, setScreenDim] = useState({ width: 0, height: 0 });
@@ -14,12 +14,10 @@ export default function page() {
     useEffect(() => {
         setScreenDim({ width: window.innerWidth, height: innerHeight })
         const offsetInterval = setInterval(() => {
-            if (speed > 0) {
-                setOffset(prev => prev + 1)
-            }
+            setOffset(prev => prev + (speed / 10))
         }, 25);
         return () => clearInterval(offsetInterval)
-    }, [speed]);
+    }, []);
 
     return (
         <div className='bg-black w-screen h-screen relative'>
@@ -29,7 +27,7 @@ export default function page() {
                         type: "range",
                         title: "Amount:",
                         min: 10,
-                        max: 100,
+                        max: 300,
                         value: amount,
                         onChange: setAmount
 
@@ -37,9 +35,9 @@ export default function page() {
                     {
                         type: "range",
                         title: "Speed:",
-                        min: 0,
-                        max: 300,
-                        value: speed,
+                        min: -100,
+                        max: 100,
+                        value:speed,
                         onChange: setSpeed
 
                     },
@@ -64,8 +62,8 @@ export default function page() {
                                     // top: `${Math.sin(((360 / parseInt(amount)) * i) * (Math.PI / 180)) * 100}px`,
                                     // left: `${Math.cos(((360 / parseInt(amount)) * i) * (Math.PI / 180)) * 100}px`,
                                     transform: `translate(
-                                        ${Math.sin(((360 / parseInt(amount)) * (i * (offset / (Math.abs(speed - 400))))) * (Math.PI / 180)) * (i * 5)}px,
-                                        ${Math.cos(((360 / parseInt(amount)) * (i * (offset / (Math.abs(speed - 400))))) * (Math.PI / 180)) * (i * 5)}px
+                                        ${Math.sin(((360 / parseInt(amount)) * (i * (offset / 100))) * (Math.PI / 180)) * (i * 5)}px,
+                                        ${Math.cos(((360 / parseInt(amount)) * (i * (offset / 100))) * (Math.PI / 180)) * (i * 5)}px
                                     )`
                                 }}
                             />              
@@ -77,10 +75,10 @@ export default function page() {
                             <path 
                                 d={`
                                     M0 0
-                                    C${[...Array(amount)].map((e, i) => {
+                                    C${[...Array(parseInt(amount))].map((e, i) => {
                                         return (`
-                                            ${Math.sin(((360 / parseInt(amount)) * (i * (offset / (Math.abs(speed - 400))))) * (Math.PI / 180)) * (i * 5)}
-                                            ${Math.cos(((360 / parseInt(amount)) * (i * (offset / (Math.abs(speed - 400))))) * (Math.PI / 180)) * (i * 5)}
+                                            ${Math.sin(((360 / parseInt(amount)) * (i * (offset / 100))) * (Math.PI / 180)) * (i * 3)}
+                                            ${Math.cos(((360 / parseInt(amount)) * (i * (offset / 100))) * (Math.PI / 180)) * (i * 3)}
                                         `)
                                     }).join(" ")}
                                 `}
