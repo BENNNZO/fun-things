@@ -11,8 +11,6 @@ export default function Box(props) {
     const [distY, setDistY] = useState(0)
     const [quad, setQuad] = useState(0)
     const [screenDim, setScreenDim] = useState({ width: 0, height: 0 })
-    const [debugLoad, setDebugLoad] = useState(false)
-    const [debugLoadQuads, setDebugLoadQuads] = useState(false)
     const [top, setTop] = useState("hsl(50, 50%, 50%)")
     const [left, setLeft] = useState("hsl(50, 50%, 50%)")
     const [right, setRight] = useState("hsl(50, 50%, 50%)")
@@ -20,12 +18,6 @@ export default function Box(props) {
     const [front, setFront] = useState("hsl(50, 50%, 50%)")
 
     const ref = useRef()
-
-    // let top = "rgb(220, 220, 220)",
-    //     left = "rgb(180, 180, 180)",
-    //     right = "rgb(150, 150, 150)",
-    //     bottom = "rgb(100, 100, 100)",
-    //     front = "rgb(125, 125, 125)"
 
     useEffect(() => {
         let distFrom0 = getHypot(ref.current.offsetTop, ref.current.offsetLeft)

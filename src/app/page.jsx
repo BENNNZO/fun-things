@@ -9,6 +9,7 @@ import MouseTrailImg from '@/assets/things/mouse-trail.png'
 import Rings from '@/assets/things/3d-rings.png'
 import Boxes from '@/assets/things/3d-boxes.png'
 import AmberFlies from '@/assets/things/amber-flies.png'
+import Spiral from '@/assets/things/spiral.png'
 
 export default function Home() {
     const router = useRouter()
@@ -47,7 +48,7 @@ export default function Home() {
         {
             title: "Spiral",
             link: '/things/spiral',
-            src: PlaceHolder,
+            src: Spiral,
             alt: "alternate"
         }
     ]
@@ -63,7 +64,7 @@ export default function Home() {
                     <Image 
                         src={e.src}
                         alt={e.alt}
-                        className="group-hover:scale-150 transition-transform object-cover h-full w-full"
+                        className="group-hover:scale-150 transition-transform object-cover h-full w-full blur-sm scale-125"
                     />
                     <p className="text-black text-3xl z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold shadow-md px-3 py-1 bg-white/50 backdrop-blur-md rounded-md group-hover:scale-125 transition-transform whitespace-nowrap">{e.title}</p>
                 </li>

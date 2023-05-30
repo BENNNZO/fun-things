@@ -15,7 +15,7 @@ export default function() {
     const [amount, setAmount] = useState(50)
     const [speed, setSpeed] = useState(75)
     const [spread, setSpread] = useState(50)
-
+    const [durationArr, setDurationArr] = useState([])
 
     useEffect(() => {
         const frame = setInterval(() => {
@@ -28,6 +28,10 @@ export default function() {
         setFps(1000 / Math.abs(fpsControl - new Date))
         setFpsControl(new Date)
     }, [frameCount])
+
+    useEffect(() => {
+        setDurationArr([...Array(amount)].map(() => Math.random() * 200 + 200))
+    }, [amount])
 
     return (
         <div className='bg-gradient-to-tr from-orange-950/10 to-rose-950/10 bg-black'>
@@ -62,28 +66,32 @@ export default function() {
                     }
                 ]}
             />
-            {/* <div className='absolute top-3 left-full -translate-x-full whitespace-nowrap w-52'>
-                <p className='text-xl text-white'>{`Frame: ${String(frameCount)}`}</p>
-                <p className='text-xl text-white'>{`FPS: ${String(Math.round(fps * 10) / 10)}`}</p>
-                <p className='text-xl text-white'>{`Mouse_X: ${String(mouseX)}px`}</p>
-                <p className='text-xl text-white'>{`Mouse_Y: ${String(mouseY)}px`}</p>
-            </div> */}
+            {/* <div className='absolute top-3 left-full -translate-x-full whitespace-nowrap w-52'> */}
+                {/* <p className='text-xl text-white'>{`Frame: ${String(frameCount)}`}</p> */}
+                {/* <p className='text-xl text-white'>{`FPS: ${String(Math.round(fps * 10) / 10)}`}</p> */}
+                {/* <p className='text-xl text-white'>{`Mouse_X: ${String(mouseX)}px`}</p> */}
+                {/* <p className='text-xl text-white'>{`Mouse_Y: ${String(mouseY)}px`}</p> */}
+            {/* </div> */}
+            {/* <p className='text-white absolute top-1/2 left-0 text-xl'>{JSON.stringify(durationArr)}</p> */}
             <div 
                 className='w-screen h-screen overflow-hidden' 
                 onMouseMove={e => {setMouseX(e.clientX); setMouseY(e.clientY)}}
             >
-                {[...Array(parseInt(amount))].map((e, i) => (
-                    <Fly
-                        key={i}
-                        update={frameCount}
-                        timeOffset={(360 / amount) * i}
-                        mouseOffset={{ x: mouseX, y: mouseY }}
-                        speed={speed / 10}
-                        relativeSpread={spread}
-                        index={i}
-                        total={amount}
-                    />
-                ))}
+                {[...Array(parseInt(amount))].map((e, i) => {
+                    return (
+                        <Fly
+                            key={i}
+                            update={frameCount}
+                            timeOffset={(360 / amount) * i}
+                            mouseOffset={{ x: mouseX, y: mouseY }}
+                            speed={speed / 10}
+                            relativeSpread={spread}
+                            index={i}
+                            total={amount}
+                            duration={durationArr[i]}
+                        />
+                    )
+                })}
             </div>
         </div>
     )

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 
 export default function(props) {
-    let duration = props.index * 25 + 1000
-    let color = `hsl(${(50 / props.total) * props.index} 50% 50%)`
+    let duration = props.duration * 25 + 1000
+
+    const [colorOffset, setColorOffset] = useState(0)
 
     const [yOffset, setYOffset] = useState(Math.random() * 3 + 5)
     const [xOffset, setXOffset] = useState(Math.random() * 10 + 5)
@@ -19,6 +20,8 @@ export default function(props) {
 
     useEffect(() => { // update every frame
         let date = new Date
+
+        setColorOffset(prev => prev + 0.25)
 
         setYOffset(Math.sin(((date / speed) + props.timeOffset) * (Math.PI / 180)))
         setXOffset(-Math.cos(((date / speed) + props.timeOffset) * (Math.PI / 180)))
@@ -46,25 +49,24 @@ export default function(props) {
                     translate(
                         calc(
                             ${
-                                (xOffset * 300) + 
+                                (xOffset * props.duration) + 
                                 (xOffset2 * (((duration - 500) / 1000) * props.relativeSpread + 2)) + 
                                 (xOffset3 * (((duration - 500) / 1000) * props.relativeSpread + 2)) + 
                                 props.mouseOffset.x
                             }px - 50%), 
                         calc(
                             ${
-                                (yOffset * 300) + 
+                                (yOffset * props.duration) + 
                                 (yOffset2 * (((duration - 500) / 1000) * props.relativeSpread + 2)) + 
                                 (yOffset3 * (((duration - 500) / 1000) * props.relativeSpread + 2)) + 
                                 props.mouseOffset.y
                             }px - 50%)
                     )`,
                 transitionDuration: `${duration}ms`,
-                // backgroundColor: color,
-                backgroundImage: `radial-gradient(rgba(255, 255, 255, 1) 0%, ${color} 30%, transparent)`,
-                boxShadow: `0 0 10px ${color}, 
-                            ${(props.mouseOffset.x - (screenDim.width / 2)) / (screenDim.width / 2) * 10}px ${(props.mouseOffset.y - (screenDim.height / 2)) / (screenDim.height / 2) * 10}px 20px ${color},
-                            ${(props.mouseOffset.x - (screenDim.width / 2)) / (screenDim.width / 2) * 20}px ${(props.mouseOffset.y - (screenDim.height / 2)) / (screenDim.height / 2) * 20}px 40px ${color}`
+                backgroundImage: `radial-gradient(rgba(255, 255, 255, 1) 0%, hsl(${Math.abs(((colorOffset + props.index) % 100) - 50)} 50% 50%) 30%, transparent)`,
+                boxShadow: `0 0 10px hsl(${Math.abs(((colorOffset + props.index) % 100) - 50)} 50% 50%), 
+                            ${(props.mouseOffset.x - (screenDim.width / 2)) / (screenDim.width / 2) * 10}px ${(props.mouseOffset.y - (screenDim.height / 2)) / (screenDim.height / 2) * 10}px 20px hsl(${Math.abs(((colorOffset + props.index) % 100) - 50)} 50% 50%),
+                            ${(props.mouseOffset.x - (screenDim.width / 2)) / (screenDim.width / 2) * 20}px ${(props.mouseOffset.y - (screenDim.height / 2)) / (screenDim.height / 2) * 20}px 40px hsl(${Math.abs(((colorOffset + props.index) % 100) - 50)} 50% 50%)`
             }}
         >
         </div>
