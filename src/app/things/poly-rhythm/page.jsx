@@ -3,20 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Dropdown from '@/components/Dropdown';
 
-// import C1 from '@/assets/tones/1.wav'
-// import D1 from '@/assets/tones/2.wav'
-// import E1 from '@/assets/tones/3.wav'
-// import F1 from '@/assets/tones/4.wav'
-// import G1 from '@/assets/tones/5.wav'
-// import A1 from '@/assets/tones/6.wav'
-// import B1 from '@/assets/tones/7.wav'
-// import C2 from '@/assets/tones/8.wav'
-// import asd from '../../../assets/tones'
-
 export default function page() {
-    /* --------------------------------- sounds --------------------------------- */
-    // const sounds = [C1, D1, E1, F1, G1, A1, B1, C2]
-    
     /* ---------------------------- screen dimentions --------------------------- */
     const [screen, setScreen] = useState({ width: 0, height: 0 })
 
@@ -49,11 +36,6 @@ export default function page() {
         setControlTime(new Date)
     }, [frame])
 
-    function playSound(index) {
-        let tone = new Audio('../../../assets/tones/1.wav')
-        tone.play()
-    }
-
     return (
         <div>
             <p className='relative left-3/4'>Width: {String(screen.width)}</p>
@@ -81,14 +63,11 @@ export default function page() {
                     let yPos = (screen.height / 1.2) / amount * i + ((screen.height / 1.2) / amount / 2)
                     let velocity = (100 * (i + 20)) / 30
                     let distance = seconds * velocity
-                    if (distance % 100 < 1) {
-                        playSound(1)
-                    }
                     return (
                         <div key={i}>
                             <div 
                                 style={{ top: yPos }} 
-                                className='absolute w-full h-px bg-red-400' 
+                                className='absolute w-full h-px bg-red-400'
                             />
                             <div s
                                 style={{ top: yPos, left: `${distance % 100}%` }} 
