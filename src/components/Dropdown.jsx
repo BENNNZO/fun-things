@@ -45,7 +45,7 @@ export default function Dropdown(props) {
                     >
                         <p>{e.title}</p>
                         {e.type === "range" ? (
-                            <input type="range" min={e.min} max={e.max} value={e.value} onChange={r => e.onChange(parseInt(r.target.value))} />
+                            <input type="range" min={e.min} max={e.max} value={e.value} onChange={r => e.onChange(parseInt(r.target.value))} step={e.step || 1} />
                         ) : e.type === "checkbox" ? (
                             <input type="checkbox" checked={e.value} onChange={r => e.onChange(r.target.checked)} />
                         ) : (

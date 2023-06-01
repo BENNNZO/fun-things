@@ -20,19 +20,23 @@ export default function page() {
 
     useEffect(() => {
         let boxMatrix = []
-        for (let i = 0; i < window.innerHeight / amount; i++) {
+        for (let i = 0; i < dim.height / amount; i++) {
             let row = []
-            for (let i = 0; i < window.innerWidth / amount; i++) {
+            for (let i = 0; i < dim.width / amount; i++) {
                 row.push(1)
             }
             boxMatrix.push(row)
         }
         setBoxes(boxMatrix)
-    }, [amount])
+    }, [amount, dim])
 
     useEffect(() => {
-        setDim({ width: window.innerWidth, height: window.innerHeight, mid: [window.innerWidth / 2, window.innerHeight / 2] })
-    },[])
+        const getDim = () => setDim({ width: window.innerWidth, height: window.innerHeight, mid: [window.innerWidth / 2, window.innerHeight / 2] })
+
+        window.addEventListener("resize", getDim())
+
+        return () => window.removeEventListener("resize", getDim())
+    },[dim])
 
     return (
         <div 

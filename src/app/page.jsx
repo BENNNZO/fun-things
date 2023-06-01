@@ -50,11 +50,17 @@ export default function Home() {
             link: '/things/spiral',
             src: Spiral,
             alt: "alternate"
+        },
+        {
+            title: "Poly Rhythm",
+            link: '/things/poly-rhythm',
+            src: PlaceHolder,
+            alt: "alternate"
         }
     ]
 
     return (
-        <ul className="grid grid-cols-2 gap-px w-screen h-screen overflow-hidden bg-white p-px">
+        <ul className="grid grid-cols-3 gap-px w-screen h-screen overflow-hidden bg-white p-px">
             {pages.map((e, i) => (
                 <li
                     key={i}
