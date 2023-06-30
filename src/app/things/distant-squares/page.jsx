@@ -10,8 +10,8 @@ import DistantSquare from '@/components/DistantSquare';
 
 export default function DistantSquares() {
     const [squares, setSquares] = useState([])
-    const [mouseX, setMouseX] = useState(window.innerWidth / 2)
-    const [mouseY, setMouseY] = useState(window.innerHeight / 2)
+    const [mouseX, setMouseX] = useState(0)
+    const [mouseY, setMouseY] = useState(0)
 
     const [effectRadius, setEffectRadius] = useState(15)
     const [amountOfBoxes, setAmountOfBoxes] = useState(30)
