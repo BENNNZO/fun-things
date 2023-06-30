@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import Dropdown from '@/components/Dropdown'
 import Fly from '@/components/Fly'
 
-export default function() {
+export default function PointerSwarm() {
     const [fps, setFps] = useState(0)
     const [frameCount, setFrameCount] = useState(0)
     const [fpsControl, setFpsControl] = useState(new Date)
@@ -22,15 +22,18 @@ export default function() {
             setFrameCount(frame => frame + 1)
         }, 1);
         return () => clearInterval(frame)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => { // updates every frame
         setFps(1000 / Math.abs(fpsControl - new Date))
         setFpsControl(new Date)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [frameCount])
 
     useEffect(() => {
         setDurationArr([...Array(amount)].map(() => Math.random() * 200 + 200))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [amount])
 
     return (

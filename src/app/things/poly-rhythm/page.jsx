@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Dropdown from '@/components/Dropdown';
 
-export default function page() {
+export default function PolyRhythm() {
     /* ---------------------------- screen dimentions --------------------------- */
     const [screen, setScreen] = useState({ width: 0, height: 0 })
 
@@ -28,12 +28,14 @@ export default function page() {
         const frame = setInterval(() => setFrame(frame => frame + 1), 1);
 
         return () => clearInterval(frame)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     useEffect(() => { // update every frame
         setFps(Math.round(1000 / (new Date - controlTime)))
         setSeconds(prev => prev + (new Date - controlTime) / 1000)
         setControlTime(new Date)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [frame])
 
     return (

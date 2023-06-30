@@ -8,7 +8,7 @@ import Box from '@/components/3DBox'
 // I accidentally made a Autostereogram
 // if you cross your eyes the right amount and then focus then so there not blurred the boxed will actually pop out the screen
 
-export default function page() {
+export default function ThreeDeeBox() {
     const [dim, setDim] = useState({ width: 0, height: 0 })
     const [boxes, setBoxes] = useState([])
     const [amount, setAmount] = useState(250)
@@ -28,6 +28,7 @@ export default function page() {
             boxMatrix.push(row)
         }
         setBoxes(boxMatrix)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [amount, dim])
 
     useEffect(() => {
@@ -36,6 +37,7 @@ export default function page() {
         window.addEventListener("resize", getDim())
 
         return () => window.removeEventListener("resize", getDim())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[dim])
 
     return (

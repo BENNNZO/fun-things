@@ -29,16 +29,19 @@ export default function(props) {
         setXOffset2(Math.cos(((date * speed2) + props.timeOffset) * (Math.PI / 180)))
         setYOffset3(Math.sin(((date * speed3) + props.timeOffset) * (Math.PI / 180)))
         setXOffset3(Math.cos(((date * speed3) + props.timeOffset) * (Math.PI / 180)))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.update])
 
     useEffect(() => {
         setSpeed(Math.random() * props.speed + props.speed)
         setSpeed2((Math.random() * props.speed + props.speed) / 100)
         setSpeed3((Math.random() * props.speed + props.speed) / 200)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.speed])
 
     useEffect(() => {
         setScreenDim({ width: window.innerWidth, height: innerHeight })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

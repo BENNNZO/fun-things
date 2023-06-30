@@ -42,18 +42,22 @@ export default function Box(props) {
         } else if (ref.current.offsetTop > props.dim.mid[1] && ref.current.offsetLeft < props.dim.mid[0]) {
             setQuad(4)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.size, props.dim])
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.size])
 
     useEffect(() => {
         setScreenDim({width: window.innerWidth, height: window.innerHeight})
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
         if (props.debug === true) setDebugLoad(true)
         if (props.debugQuad === true) setDebugLoadQuads(true)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.debug])
 
     function getHypot(a, b) { // get hypotenous (I don't know how to spella)

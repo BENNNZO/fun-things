@@ -51,12 +51,12 @@ export default function Home() {
             src: Spiral,
             alt: "alternate"
         },
-        {
-            title: "Poly Rhythm",
-            link: '/things/poly-rhythm',
-            src: PlaceHolder,
-            alt: "alternate"
-        }
+        // {
+        //     title: "Poly Rhythm",
+        //     link: '/things/poly-rhythm',
+        //     src: PlaceHolder,
+        //     alt: "alternate"
+        // }
     ]
 
     return (

@@ -21,6 +21,7 @@ export default function DistantSquare(props) {
         ) : (
             setSize(Math.abs(Math.min((hype / (props.effectRadius / 10)) - (props.effectRadius * 3), 0)))
         )
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.x, props.y])
 
     return (

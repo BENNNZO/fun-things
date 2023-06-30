@@ -8,7 +8,7 @@ import Dropdown from '@/components/Dropdown';
 
 import DistantSquare from '@/components/DistantSquare';
 
-export default function page() {
+export default function DistantSquares() {
     const [squares, setSquares] = useState([])
     const [mouseX, setMouseX] = useState(window.innerWidth / 2)
     const [mouseY, setMouseY] = useState(window.innerHeight / 2)
@@ -33,6 +33,7 @@ export default function page() {
         }
 
         genSquares()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [amountOfBoxes])
 
     return (

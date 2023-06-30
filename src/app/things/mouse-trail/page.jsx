@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 
 import Dropdown from '@/components/Dropdown';
 
-export default function page() {
+export default function MouseTrail() {
     const [mouseX, setMouseX] = useState(0)
     const [mouseY, setMouseY] = useState(0)
     const [length, setLength] = useState(125)
@@ -29,10 +29,12 @@ export default function page() {
 
         // return () => updateMousePosArr()
         return () => clearInterval(mousePosArrInterval)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mouseX, mouseY])
 
     useEffect(() => {
         setSvgDimentions({ x: window.innerWidth, y: window.innerHeight })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

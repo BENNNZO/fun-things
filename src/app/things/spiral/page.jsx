@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Dropdown from '@/components/Dropdown';
 
-export default function page() {
+export default function Spiral() {
     const [amount, setAmount] = useState(300);
     const [offset, setOffset] = useState(0);
     const [speed, setSpeed] = useState(5);
@@ -17,6 +17,7 @@ export default function page() {
             setOffset(prev => prev + (speed / 2))
         }, 25);
         return () => clearInterval(offsetInterval)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [speed]);
 
     return (

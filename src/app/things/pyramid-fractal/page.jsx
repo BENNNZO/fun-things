@@ -3,12 +3,13 @@
 import React, { useState } from 'react'
 import Dropdown from '@/components/Dropdown'
 
-export default function() {
+export default function PyramidFractal() {
     const [layers, setLayers] = useState(3)
     const [screenDim, setScreenDim] = useState({ width: 0, height: 0 });
 
     useEffect(() => {
         setScreenDim({ width: window.innerWidth, height: window.innerHeight })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Dropdown from '@/components/Dropdown';
 
-export default function page() {
+export default function ThreeDeePointer() {
     const [mouseX, setMouseX] = useState(0)
     const [mouseY, setMouseY] = useState(0)
     const [screenDimentions, setScreenDimentions] = useState({ width: 0, height: 0 })
@@ -12,6 +12,7 @@ export default function page() {
 
     useEffect(() => {
         setScreenDimentions({ width: window.innerWidth, height: window.innerHeight })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
