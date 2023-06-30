@@ -89,11 +89,11 @@ export default function DistantSquares() {
                 style={{ filter: `blur(${(filter / 100) * 15}px) contrast(${(filter / 100) * 30 + 1})` }}
             >
                 <div className='flex flex-col gap-5 h-screen justify-around'>
-                    {squares.map(e => {
+                    {squares.map((e, i) => {
                         return (
-                            <div className='flex flex-row w-screen justify-around h-full'>
-                                {e.map(e => (
-                                    <DistantSquare invert={invert} x={mouseX} y={mouseY} effectRadius={effectRadius} roundness={roundness} />
+                            <div key={i} className='flex flex-row w-screen justify-around h-full'>
+                                {e.map((e, i) => (
+                                    <DistantSquare key={i} invert={invert} x={mouseX} y={mouseY} effectRadius={effectRadius} roundness={roundness} />
                                 ))}
                             </div>
                         )

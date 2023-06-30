@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-export default function(props) {
+export default function Fly(props) {
     let duration = props.duration * 25 + 1000
 
     const [colorOffset, setColorOffset] = useState(0)

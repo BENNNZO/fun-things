@@ -18,8 +18,8 @@ export default function PyramidFractal() {
             
             />
             <svg>
-                {[...Array(layers)].map(e => (
-                    <div>hello world!</div>
+                {[...Array(layers)].map((e, i) => (
+                    <div key={i}>hello world!</div>
                 ))}
             </svg>
         </div>

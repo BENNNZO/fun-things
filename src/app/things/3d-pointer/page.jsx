@@ -43,6 +43,7 @@ export default function ThreeDeePointer() {
             <div className='w-full h-full overflow-hidden relative'>
                 {[...Array(parseInt(rings))].map((e, i) => (
                     <div 
+                        key={i}
                         className='bg-white shadow-ring rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
                         style={{ 
                             width: `${((rings - i) * spacing) / (rings / i)}px`, 

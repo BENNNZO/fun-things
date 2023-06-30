@@ -48,10 +48,11 @@ export default function ThreeDeeBox() {
             {/* <p className='text-white'>{JSON.stringify(boxes, null, 4)}</p> */}
             {/* <p className='text-white text-3xl'>{String(debug)}</p> */}
             <div className='w-full h-full flex flex-col justify-around'>
-                {boxes.map(e => (
-                    <div className='flex flex-row justify-around w-full h-full items-center'>
-                        {e.map(() => (
+                {boxes.map((e, i) => (
+                    <div key={i} className='flex flex-row justify-around w-full h-full items-center'>
+                        {e.map((e, i) => (
                             <Box
+                                key={i}
                                 size={size}
                                 dim={{ mid: [mouseX, mouseY]}}
                                 // dim={{ mid: [500, 500]}}

@@ -94,7 +94,8 @@ export default function MouseTrail() {
                 style={{ filter: `blur(${(filter / 100) * 15}px) contrast(${(filter / 100) * 30 + 1})` }}
             >
                 {mousePosArr.map((e, i) => (
-                    <path 
+                    <path
+                        key={i}
                         d={`M${e[0]} ${e[1]}, L${mousePosArr[i - 1] !== undefined ? mousePosArr[i - 1][0] : e[0]} ${mousePosArr[i - 1] !== undefined ? mousePosArr[i - 1][1] : e[1]}`} 
                         stroke="white"
                         strokeWidth={Math.abs((i / length) * (size / 10) - 1) * 30}
