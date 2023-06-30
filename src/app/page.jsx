@@ -3,11 +3,11 @@
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 
-import PlaceHolder from '@/assets/things/place-holder.png'
+// import PlaceHolder from '@/assets/things/place-holder.png'
 import DistantSquaresImg from '@/assets/things/distant-squares.png'
 import MouseTrailImg from '@/assets/things/mouse-trail.png'
 import Rings from '@/assets/things/3d-rings.png'
-import Boxes from '@/assets/things/3d-boxes.png'
+import Boxes from '@/assets/things/3d-boxes-rename-extention.png'
 import AmberFlies from '@/assets/things/amber-flies.png'
 import Spiral from '@/assets/things/spiral.png'
 
